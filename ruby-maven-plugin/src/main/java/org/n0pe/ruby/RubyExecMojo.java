@@ -18,7 +18,6 @@
  */
 package org.n0pe.ruby;
 
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -33,7 +32,6 @@ import org.apache.maven.plugin.MojoFailureException;
 
 import org.jruby.javasupport.bsf.JRubyEngine;
 
-
 /**
  * @goal exec
  * @author Paul Merlin <eskatos@n0pe.org>
@@ -41,13 +39,11 @@ import org.jruby.javasupport.bsf.JRubyEngine;
 public class RubyExecMojo
         extends AbstractRubyMojo {
 
-
     /**
      * @parameter
      * @required
      */
     private File script;
-
 
     public void execute()
             throws MojoExecutionException, MojoFailureException {
@@ -63,20 +59,15 @@ public class RubyExecMojo
                 throw new MojoExecutionException(ex.getMessage(), ex);
             }
         } else {
-            getLog().warn("");
-            getLog().warn("");
-            getLog().warn("WORKING DIRECTORY IS SET - USING AN HORRIBLE HACK");
-            getLog().warn("We are now forking another JVM process to change the ruby code execution working directory");
-            getLog().warn("");
-            getLog().warn("");
-            executeHorribleHack(new String[]{
-                                    "-cp",
-                                    getClasspath(),
-                                    RubyExecMain.class.getName(),
-                                    script.getAbsolutePath()
-                                });
+            getLog().warn(
+                    "workingDirectory is set, we need to fork another JVM process to change the ruby code execution working directory");
+            forkJavaVM(new String[]{
+                        "-cp",
+                        getClasspath(),
+                        RubyExecMain.class.getName(),
+                        script.getAbsolutePath()
+                    });
         }
     }
-
 
 }

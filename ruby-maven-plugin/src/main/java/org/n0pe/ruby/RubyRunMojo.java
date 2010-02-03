@@ -54,13 +54,8 @@ public class RubyRunMojo
                 throw new MojoExecutionException(ex.getMessage(), ex);
             }
         } else {
-            getLog().warn("");
-            getLog().warn("");
-            getLog().warn("WORKING DIRECTORY IS SET - USING AN HORRIBLE HACK");
-            getLog().warn("We are now forking another JVM process to change the ruby code execution working directory");
-            getLog().warn("");
-            getLog().warn("");
-            executeHorribleHack(new String[]{
+            getLog().warn("workingDirectory is set, we need to fork another JVM process to change the ruby code execution working directory");
+            forkJavaVM(new String[]{
                                     "-cp",
                                     getClasspath(),
                                     RubyRunMain.class.getName(),

@@ -18,7 +18,6 @@
  */
 package org.n0pe.ruby;
 
-
 import java.io.File;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -39,19 +38,16 @@ import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
 import org.codehaus.plexus.util.cli.StreamConsumer;
 
-
 /**
  * @author Paul Merlin <eskatos@n0pe.org>
  */
 public abstract class AbstractRubyMojo
         extends AbstractMojo {
 
-
     /**
      * @parameter
      */
     protected File workingDirectory;
-
 
     /**
      * @parameter expression="${plugin.artifactMap}"
@@ -60,14 +56,12 @@ public abstract class AbstractRubyMojo
      */
     private Map pluginArtifactMap;
 
-
     /** 
      * @component
      * @required
      * @readonly
      */
     private ArtifactFactory artifactFactory;
-
 
     /** 
      * @component
@@ -76,14 +70,12 @@ public abstract class AbstractRubyMojo
      */
     private ArtifactResolver artifactResolver;
 
-
     /**
      * @parameter expression="${localRepository}"
      * @required
      * @readonly
      */
     private ArtifactRepository localRepository;
-
 
     /** 
      * @parameter expression="${project.remoteArtifactRepositories}" 
@@ -92,8 +84,7 @@ public abstract class AbstractRubyMojo
      */
     private List remoteRepositories;
 
-
-    protected void executeHorribleHack(String[] args)
+    protected void forkJavaVM(String[] args)
             throws MojoExecutionException {
         try {
             final Commandline commandLine = new Commandline();
@@ -102,20 +93,16 @@ public abstract class AbstractRubyMojo
             commandLine.addArguments(args);
             final StreamConsumer stdout = new StreamConsumer() {
 
-
                 public void consumeLine(String line) {
                     getLog().info(line);
                 }
 
-
             };
             final StreamConsumer stderr = new StreamConsumer() {
-
 
                 public void consumeLine(String line) {
                     getLog().error(line);
                 }
-
 
             };
             int ret = CommandLineUtils.executeCommandLine(commandLine, stdout, stderr);
@@ -126,7 +113,6 @@ public abstract class AbstractRubyMojo
             throw new MojoExecutionException(ex.getMessage(), ex);
         }
     }
-
 
     protected String getClasspath()
             throws MojoExecutionException {
@@ -169,7 +155,6 @@ public abstract class AbstractRubyMojo
         }
     }
 
-
     protected File getJavaExecutable()
             throws MojoExecutionException {
         final String javaHome = System.getenv("JAVA_HOME");
@@ -185,6 +170,5 @@ public abstract class AbstractRubyMojo
         }
         return java;
     }
-
 
 }
