@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><metadata>
-  <plugins>
-    <plugin>
-      <name>ruby-maven-plugin</name>
-      <prefix>ruby</prefix>
-      <artifactId>ruby-maven-plugin</artifactId>
-    </plugin>
-  </plugins>
-</metadata>
